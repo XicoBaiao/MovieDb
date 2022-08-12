@@ -8,9 +8,33 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var movies: [Movie] = []
+    
+    @State private var moviesSection: MoviesEndpoints = .nowPlaying
+    
+    fileprivate func movieSectionPicker() -> some View {
+        return Picker("Select", selection: $moviesSection) {
+            Text(MoviesEndpoints.nowPlaying.description).tag(MoviesEndpoints.nowPlaying)
+            Text(MoviesEndpoints.popular.description).tag(MoviesEndpoints.popular)
+            Text(MoviesEndpoints.topRated.description).tag(MoviesEndpoints.topRated)
+            Text(MoviesEndpoints.upcoming.description).tag(MoviesEndpoints.upcoming)
+        }.pickerStyle(SegmentedPickerStyle())
+    }
+    
     var body: some View {
-        Text("Hello, world!")
+        
+        VStack {
+            movieSectionPicker()
+            
+            Text("Hello, world!")
+                .onAppear {
+                    Api().getNowPlayingMovies() { movies in
+                        self.movies = movies
+                    }
+                }
             .padding()
+        }
     }
 }
 
