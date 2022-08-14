@@ -36,7 +36,7 @@ struct ContentView: View {
                         moviesApi.getMovies(moviesSection: moviesSection)
                     }
                     
-                    MovieListView(movies: moviesApi.movies)
+                    MovieListView(movies: moviesApi.movies, showHiddenMovies: true)
                         .environmentObject(realmManager)
                         .onAppear {
                             moviesApi.getMovies(moviesSection: moviesSection)
@@ -85,7 +85,7 @@ struct ContentView: View {
                                 .padding(.vertical, 5)
                         }
                     } else {
-                        MovieListView(movies: realmManager.favoriteMovies).environmentObject(realmManager)
+                        MovieListView(movies: realmManager.favoriteMovies, showHiddenMovies: true).environmentObject(realmManager)
                     }
                 }
                 .navigationBarTitle("My Favorites", displayMode: .inline)
@@ -118,7 +118,7 @@ struct ContentView: View {
                         }
                         
                     } else {
-                        MovieListView(movies: moviesApi.searchedMovies)
+                        MovieListView(movies: moviesApi.searchedMovies, isSearchView: true, showHiddenMovies: false)
                             .environmentObject(realmManager)
                             
                     }

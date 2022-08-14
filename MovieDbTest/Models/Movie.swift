@@ -42,7 +42,8 @@ struct Movie: Codable, Identifiable {
     let voteAverage: Double
     let voteCount: Int
     let runtime: Int?
-    var isFavorite: Bool?
+    var isFavorite: Bool = false
+    var isHidden: Bool = false
     
     enum CodingKeys: String, CodingKey {
             case id = "id"

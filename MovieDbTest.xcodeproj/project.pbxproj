@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3DA46A7128A9367B0009CD88 /* HiddenMovieRealmObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA46A7028A9367B0009CD88 /* HiddenMovieRealmObject.swift */; };
 		3DAA2F0228A69D18008B0EBF /* MovieDbTestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAA2F0128A69D18008B0EBF /* MovieDbTestApp.swift */; };
 		3DAA2F0428A69D18008B0EBF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAA2F0328A69D18008B0EBF /* ContentView.swift */; };
 		3DAA2F0628A69D1A008B0EBF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DAA2F0528A69D1A008B0EBF /* Assets.xcassets */; };
@@ -52,6 +53,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3DA46A7028A9367B0009CD88 /* HiddenMovieRealmObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenMovieRealmObject.swift; sourceTree = "<group>"; };
 		3DAA2EFE28A69D18008B0EBF /* MovieDbTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieDbTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DAA2F0128A69D18008B0EBF /* MovieDbTestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDbTestApp.swift; sourceTree = "<group>"; };
 		3DAA2F0328A69D18008B0EBF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -107,6 +109,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3DA46A6F28A9366B0009CD88 /* Realm Objects */ = {
+			isa = PBXGroup;
+			children = (
+				3DAA2F5528A8A7B0008B0EBF /* MovieRealmObject.swift */,
+				3DA46A7028A9367B0009CD88 /* HiddenMovieRealmObject.swift */,
+			);
+			path = "Realm Objects";
+			sourceTree = "<group>";
+		};
 		3DAA2EF528A69D18008B0EBF = {
 			isa = PBXGroup;
 			children = (
@@ -218,10 +229,10 @@
 		3DAA2F4928A898A6008B0EBF /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				3DA46A6F28A9366B0009CD88 /* Realm Objects */,
 				3DAA2F4A28A898B3008B0EBF /* Database.swift */,
 				3DAA2F4C28A89B8D008B0EBF /* FavoriteMoviesViewModel.swift */,
 				3DAA2F5328A8A6F7008B0EBF /* RealmManager.swift */,
-				3DAA2F5528A8A7B0008B0EBF /* MovieRealmObject.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -378,6 +389,7 @@
 				3DAA2F5628A8A7B0008B0EBF /* MovieRealmObject.swift in Sources */,
 				3DAA2F3A28A85FEA008B0EBF /* MovieImageView.swift in Sources */,
 				3DAA2F3E28A86ED8008B0EBF /* MovieDetailView.swift in Sources */,
+				3DA46A7128A9367B0009CD88 /* HiddenMovieRealmObject.swift in Sources */,
 				3DAA2F4828A88B17008B0EBF /* NavigatorUtils.swift in Sources */,
 				3DAA2F4D28A89B8D008B0EBF /* FavoriteMoviesViewModel.swift in Sources */,
 				3DAA2F4B28A898B3008B0EBF /* Database.swift in Sources */,
