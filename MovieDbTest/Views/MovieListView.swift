@@ -8,27 +8,49 @@
 import SwiftUI
 
 struct MovieListView: View {
+
+    var movies: [Movie] = []
+    
+    @StateObject private var favoritesVM = FavoriteMoviesViewModel()
+    @EnvironmentObject var realmManager: RealmManager
+    
     var body: some View {
-        List(0..<10) { movie in
-            HStack {
-                Image("default")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 70)
-                    .cornerRadius(4)
-                
+        List(movies, id: \.id) { movie in
+            NavigationLink(destination: MovieDetailView(movie: movie)){
                 VStack {
-                    Text("Avengers: Last Galaxy")
-                        .fontWeight(.semibold)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.5)
-                    
-                    Text("Description")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
+                    HStack {
+                        Button(action: {
+                            if realmManager.favoriteMovies.contains(where: { $0.id == movie.id}) {
+                                realmManager.deleteFavoriteMovie(id: movie.id)
+                            } else {
+                                realmManager.addFavoriteMovie(movie: movie)
+                            }
+                        }) {
+                            Image(systemName: realmManager.favoriteMovies.contains(where: { $0.id == movie.id}) ? "heart.fill" : "heart")
+                                .foregroundColor(.red)
+                                            }.buttonStyle(PlainButtonStyle())
+                                            .padding(.horizontal)
+                        
+                        MovieImageView(movie: movie)
+                        VStack(alignment: .center, spacing: 10) {
+                            Text(movie.title)
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.5)
+                            Text(movie.overview)
+                                .font(.body)
+                                .foregroundColor(.secondary)
+                                .minimumScaleFactor(0.7)
+                                .lineLimit(4)
+                        }
+                    }
+                    .frame(height: 100)
                 }
+                
             }
         }
+        .listStyle(.plain)
     }
 }
 

@@ -6,16 +6,17 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct MovieResponse: Decodable {
     let results: [Movie]
-    let dates: DateValue
+//    let dates: DateValue
     let page: Int
     let total_pages: Int
     let total_results: Int
     
     enum CodingKeys: String, CodingKey {
-        case dates
+//        case dates
         case page
         case results
         case total_pages
@@ -24,7 +25,7 @@ struct MovieResponse: Decodable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.dates = try container.decode(DateValue.self, forKey: .dates)
+//        self.dates = try container.decode(DateValue.self, forKey: .dates)
         self.results = try container.decode([Movie].self, forKey: .results)
         self.total_pages = try container.decode(Int.self, forKey: .total_pages)
         self.total_results = try container.decode(Int.self, forKey: .total_results)
@@ -32,7 +33,7 @@ struct MovieResponse: Decodable {
     }
 }
 
-struct Movie: Codable {
+struct Movie: Codable, Identifiable {
     let id: Int
     let title: String
     let backdropPath: String?
@@ -41,6 +42,7 @@ struct Movie: Codable {
     let voteAverage: Double
     let voteCount: Int
     let runtime: Int?
+    var isFavorite: Bool?
     
     enum CodingKeys: String, CodingKey {
             case id = "id"
@@ -52,10 +54,11 @@ struct Movie: Codable {
             case voteCount = "vote_count"
             case runtime = "runtime"
         }
+    
+    var backdropURL: URL {
+            return URL(string: "https://image.tmdb.org/t/p/w500\(backdropPath ?? "")")!
+    }
 }
 
-struct DateValue: Codable {
-    var maximum: String
-    var minimum: String
-}
+
 

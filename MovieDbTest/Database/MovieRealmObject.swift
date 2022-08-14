@@ -6,3 +6,17 @@
 //
 
 import Foundation
+import RealmSwift
+
+class MovieRealmObject: Object, ObjectKeyIdentifiable {
+    @Persisted(primaryKey: true) var id: Int
+    @Persisted var title = ""
+    @Persisted var backdropPath = ""
+    @Persisted var posterPath = ""
+    @Persisted var overview = ""
+    @Persisted var voteAverage = 0.0
+    @Persisted var voteCount = 0
+    @Persisted var runtime = 0
+    @Persisted var isFavorite = false
+    
+}

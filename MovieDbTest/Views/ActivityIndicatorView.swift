@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct ActivityIndicatorView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+    func makeUIView(context: Context)
 }
 
 struct ActivityIndicatorView_Previews: PreviewProvider {
