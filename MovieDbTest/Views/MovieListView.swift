@@ -11,7 +11,6 @@ struct MovieListView: View {
 
     var movies: [Movie] = []
     
-    @StateObject private var favoritesVM = FavoriteMoviesViewModel()
     @EnvironmentObject var realmManager: RealmManager
     
     var body: some View {
@@ -32,7 +31,7 @@ struct MovieListView: View {
                                             .padding(.horizontal)
                         
                         MovieImageView(movie: movie)
-                        VStack(alignment: .center, spacing: 10) {
+                        let extractedExpr: VStack<TupleView<(some View, some View)>> = VStack(alignment: .center, spacing: 10) {
                             Text(movie.title)
                                 .font(.subheadline)
                                 .fontWeight(.semibold)
@@ -44,6 +43,7 @@ struct MovieListView: View {
                                 .minimumScaleFactor(0.7)
                                 .lineLimit(4)
                         }
+                        extractedExpr
                     }
                     .frame(height: 100)
                 }

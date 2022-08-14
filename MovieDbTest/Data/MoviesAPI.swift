@@ -28,6 +28,7 @@ enum MoviesEndpoints: String, CaseIterable {
 class MoviesApi: ObservableObject {
     
     @Published var movies: [Movie] = []
+    @Published var searchedMovies: [Movie] = []
     
     @Published var isLoading: Bool = false
     
@@ -60,6 +61,25 @@ class MoviesApi: ObservableObject {
             
             DispatchQueue.main.async {
                 self.movies = moviesResponse.results
+            }
+        }
+        .resume()
+        self.isLoading = false
+    }
+    
+    func searchMovies(query: String ) {
+        self.isLoading = true
+        
+        guard let queryFormatted = query.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else {return}
+        guard let moviesAPIUrl = URL(string: "https://api.themoviedb.org/3/search/movie?api_key=dba40b2e25988d186f8c528a2eb8121d&query=\(queryFormatted)") else {return}
+
+        let request = URLRequest(url: moviesAPIUrl)
+        
+        URLSession.shared.dataTask(with: request) { (data, _, _) in
+            let moviesResponse = try! JSONDecoder().decode(MovieResponse.self, from: data!)
+            
+            DispatchQueue.main.async {
+                self.searchedMovies = moviesResponse.results
             }
         }
         .resume()

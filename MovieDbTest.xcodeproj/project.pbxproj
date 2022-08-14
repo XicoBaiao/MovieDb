@@ -15,7 +15,6 @@
 		3DAA2F1D28A69D1B008B0EBF /* MovieDbTestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAA2F1C28A69D1B008B0EBF /* MovieDbTestUITests.swift */; };
 		3DAA2F1F28A69D1B008B0EBF /* MovieDbTestUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAA2F1E28A69D1B008B0EBF /* MovieDbTestUITestsLaunchTests.swift */; };
 		3DAA2F2D28A69F8D008B0EBF /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAA2F2C28A69F8D008B0EBF /* Movie.swift */; };
-		3DAA2F3028A6B193008B0EBF /* MovieServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAA2F2F28A6B193008B0EBF /* MovieServices.swift */; };
 		3DAA2F3228A6B2EC008B0EBF /* MoviesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAA2F3128A6B2EC008B0EBF /* MoviesAPI.swift */; };
 		3DAA2F3528A6C633008B0EBF /* MovieListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAA2F3428A6C633008B0EBF /* MovieListView.swift */; };
 		3DAA2F3A28A85FEA008B0EBF /* MovieImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAA2F3928A85FEA008B0EBF /* MovieImageView.swift */; };
@@ -31,6 +30,8 @@
 		3DAA2F5428A8A6F7008B0EBF /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAA2F5328A8A6F7008B0EBF /* RealmManager.swift */; };
 		3DAA2F5628A8A7B0008B0EBF /* MovieRealmObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAA2F5528A8A7B0008B0EBF /* MovieRealmObject.swift */; };
 		3DAA2F5828A8B233008B0EBF /* Movie+Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAA2F5728A8B233008B0EBF /* Movie+Transform.swift */; };
+		3DAA2F5A28A91C78008B0EBF /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAA2F5928A91C78008B0EBF /* View+Extensions.swift */; };
+		3DAA2F5D28A927CD008B0EBF /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 3DAA2F5C28A927CD008B0EBF /* CachedAsyncImage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,7 +63,6 @@
 		3DAA2F1C28A69D1B008B0EBF /* MovieDbTestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDbTestUITests.swift; sourceTree = "<group>"; };
 		3DAA2F1E28A69D1B008B0EBF /* MovieDbTestUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDbTestUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		3DAA2F2C28A69F8D008B0EBF /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
-		3DAA2F2F28A6B193008B0EBF /* MovieServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieServices.swift; sourceTree = "<group>"; };
 		3DAA2F3128A6B2EC008B0EBF /* MoviesAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesAPI.swift; sourceTree = "<group>"; };
 		3DAA2F3428A6C633008B0EBF /* MovieListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListView.swift; sourceTree = "<group>"; };
 		3DAA2F3928A85FEA008B0EBF /* MovieImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieImageView.swift; sourceTree = "<group>"; };
@@ -76,6 +76,7 @@
 		3DAA2F5328A8A6F7008B0EBF /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		3DAA2F5528A8A7B0008B0EBF /* MovieRealmObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRealmObject.swift; sourceTree = "<group>"; };
 		3DAA2F5728A8B233008B0EBF /* Movie+Transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Movie+Transform.swift"; sourceTree = "<group>"; };
+		3DAA2F5928A91C78008B0EBF /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DAA2F5D28A927CD008B0EBF /* CachedAsyncImage in Frameworks */,
 				3DAA2F5228A8A6D6008B0EBF /* RealmSwift in Frameworks */,
 				3DAA2F5028A8A6D6008B0EBF /* Realm in Frameworks */,
 			);
@@ -178,7 +180,6 @@
 		3DAA2F2E28A6B14C008B0EBF /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				3DAA2F2F28A6B193008B0EBF /* MovieServices.swift */,
 				3DAA2F3128A6B2EC008B0EBF /* MoviesAPI.swift */,
 			);
 			path = Data;
@@ -209,6 +210,7 @@
 			children = (
 				3DAA2F4728A88B16008B0EBF /* NavigatorUtils.swift */,
 				3DAA2F5728A8B233008B0EBF /* Movie+Transform.swift */,
+				3DAA2F5928A91C78008B0EBF /* View+Extensions.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -243,6 +245,7 @@
 			packageProductDependencies = (
 				3DAA2F4F28A8A6D6008B0EBF /* Realm */,
 				3DAA2F5128A8A6D6008B0EBF /* RealmSwift */,
+				3DAA2F5C28A927CD008B0EBF /* CachedAsyncImage */,
 			);
 			productName = MovieDbTest;
 			productReference = 3DAA2EFE28A69D18008B0EBF /* MovieDbTest.app */;
@@ -318,6 +321,7 @@
 			mainGroup = 3DAA2EF528A69D18008B0EBF;
 			packageReferences = (
 				3DAA2F4E28A8A6D6008B0EBF /* XCRemoteSwiftPackageReference "realm-swift" */,
+				3DAA2F5B28A927CD008B0EBF /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 			);
 			productRefGroup = 3DAA2EFF28A69D18008B0EBF /* Products */;
 			projectDirPath = "";
@@ -368,7 +372,7 @@
 				3DAA2F3228A6B2EC008B0EBF /* MoviesAPI.swift in Sources */,
 				3DAA2F4028A873F3008B0EBF /* MovieDetailHeaderView.swift in Sources */,
 				3DAA2F0228A69D18008B0EBF /* MovieDbTestApp.swift in Sources */,
-				3DAA2F3028A6B193008B0EBF /* MovieServices.swift in Sources */,
+				3DAA2F5A28A91C78008B0EBF /* View+Extensions.swift in Sources */,
 				3DAA2F4228A87891008B0EBF /* StarsRatingView.swift in Sources */,
 				3DAA2F2D28A69F8D008B0EBF /* Movie.swift in Sources */,
 				3DAA2F5628A8A7B0008B0EBF /* MovieRealmObject.swift in Sources */,
@@ -712,6 +716,14 @@
 				minimumVersion = 10.10.0;
 			};
 		};
+		3DAA2F5B28A927CD008B0EBF /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -724,6 +736,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3DAA2F4E28A8A6D6008B0EBF /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		3DAA2F5C28A927CD008B0EBF /* CachedAsyncImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3DAA2F5B28A927CD008B0EBF /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
+			productName = CachedAsyncImage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

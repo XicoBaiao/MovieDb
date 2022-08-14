@@ -10,15 +10,13 @@ import SwiftUI
 struct ContentView: View {
     
     @StateObject var moviesApi = MoviesApi()
-    
-    @StateObject private var favoritesVM = FavoriteMoviesViewModel()
     @StateObject var realmManager = RealmManager()
-    
-    @State private var moviesSection: MoviesEndpoints = .nowPlaying
-    
     @StateObject var monitor = NetworkMonitor()
     
+    @State private var moviesSection: MoviesEndpoints = .nowPlaying
     @State var showAlert = false
+    @State private var searchText : String = ""
+    
     
     fileprivate func movieSectionPicker() -> some View {
         return Picker("Select", selection: $moviesSection) {
@@ -70,9 +68,72 @@ struct ContentView: View {
         return NavigationView {
             ZStack {
                 VStack {
-                    MovieListView(movies: realmManager.favoriteMovies).environmentObject(realmManager)
+                    if realmManager.favoriteMovies.isEmpty {
+                        VStack(spacing: 15) {
+                            Image(systemName: "heart.fill")
+                                .resizable()
+                                .frame(width: 100, height: 100, alignment: .center)
+                            Text("No Favorite Movies yet")
+                                .foregroundColor(.black)
+                                .font(.headline)
+                                .fontWeight(.medium)
+                                .padding(.top, 20)
+                            Text("Try adding some movie as your Favorite")
+                                .foregroundColor(.black)
+                                .font(.headline)
+                                .fontWeight(.regular)
+                                .padding(.vertical, 5)
+                        }
+                    } else {
+                        MovieListView(movies: realmManager.favoriteMovies).environmentObject(realmManager)
+                    }
                 }
                 .navigationBarTitle("My Favorites", displayMode: .inline)
+            }
+            .alert(isPresented: $monitor.showSaveAlert) {
+                Alert(title: Text("No Wi-fi"), message: Text("Check your Internet Connection"), dismissButton: .cancel(Text("Ok")))
+            }
+        }.navigationViewStyle(StackNavigationViewStyle())
+    }
+    
+    fileprivate func SearchMoviesView() -> some View {
+        return NavigationView {
+            ZStack {
+                VStack {
+                    if searchText.isEmpty || moviesApi.searchedMovies.isEmpty {
+                        VStack(spacing: 15) {
+                            Image(systemName: "magnifyingglass")
+                                .resizable()
+                                .frame(width: 100, height: 100, alignment: .center)
+                            Text("No Results to show")
+                                .foregroundColor(.black)
+                                .font(.headline)
+                                .fontWeight(.medium)
+                                .padding(.top, 20)
+                            Text("Insert or change your text to search for movies")
+                                .foregroundColor(.black)
+                                .font(.headline)
+                                .fontWeight(.regular)
+                                .padding(.vertical, 5)
+                        }
+                        
+                    } else {
+                        MovieListView(movies: moviesApi.searchedMovies)
+                            .environmentObject(realmManager)
+                            
+                    }
+                }
+                .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+                .onChange(of: searchText) { value in
+                    Task.init {
+                        if !value.isEmpty && value.count > 3 {
+                            moviesApi.searchMovies(query: value)
+                        } else {
+                            moviesApi.searchedMovies.removeAll()
+                        }
+                    }
+                }
+                .navigationBarTitle("Movies Database", displayMode: .inline)
             }
             .alert(isPresented: $monitor.showSaveAlert) {
                 Alert(title: Text("No Wi-fi"), message: Text("Check your Internet Connection"), dismissButton: .cancel(Text("Ok")))
@@ -89,7 +150,7 @@ struct ContentView: View {
                     Image(systemName: "square.grid.3x3")
                     Text("Library")
                 }
-            Text("Search")
+            SearchMoviesView()
                 .tabItem {
                     Image(systemName: "magnifyingglass")
                     Text("Search")
