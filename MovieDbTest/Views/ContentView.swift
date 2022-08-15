@@ -42,14 +42,14 @@ struct ContentView: View {
                             moviesApi.getMovies(moviesSection: moviesSection)
                         }
                 }
-                .navigationBarTitle("iFlix", displayMode: .inline)
+                .navigationBarTitle(StringKey.app_title.rawValue, displayMode: .inline)
                 if moviesApi.isLoading {
                     ZStack {
                         Color(.white)
                             .opacity(0.3)
                             .ignoresSafeArea()
                         
-                        ProgressView("Fetching Movies")
+                        ProgressView(StringKey.loading_movies_progress_title.rawValue)
                             .padding()
                             .background(
                                 RoundedRectangle(cornerRadius: 10)
@@ -58,10 +58,25 @@ struct ContentView: View {
                     }
                 }
             }
-            .alert(isPresented: $monitor.showSaveAlert) {
-                Alert(title: Text("No Wi-fi"), message: Text("Check your Internet Connection"), dismissButton: .cancel(Text("Ok")))
-            }
         }.navigationViewStyle(StackNavigationViewStyle())
+    }
+    
+    fileprivate func EmptyFavoritesView() -> some View {
+        return VStack(spacing: 15) {
+            Image(systemName: "heart.fill")
+                .resizable()
+                .frame(width: 100, height: 100, alignment: .center)
+            Text(StringKey.favorite_movies_empty_view_title.rawValue)
+                .foregroundColor(.black)
+                .font(.headline)
+                .fontWeight(.medium)
+                .padding(.top, 20)
+            Text(StringKey.favorite_movies_empty_view_subtitle.rawValue)
+                .foregroundColor(.black)
+                .font(.headline)
+                .fontWeight(.regular)
+                .padding(.vertical, 5)
+        }
     }
     
     fileprivate func FavoriteMoviesView() -> some View {
@@ -69,31 +84,42 @@ struct ContentView: View {
             ZStack {
                 VStack {
                     if realmManager.favoriteMovies.isEmpty {
-                        VStack(spacing: 15) {
-                            Image(systemName: "heart.fill")
-                                .resizable()
-                                .frame(width: 100, height: 100, alignment: .center)
-                            Text("No Favorite Movies yet")
-                                .foregroundColor(.black)
-                                .font(.headline)
-                                .fontWeight(.medium)
-                                .padding(.top, 20)
-                            Text("Try adding some movie as your Favorite")
-                                .foregroundColor(.black)
-                                .font(.headline)
-                                .fontWeight(.regular)
-                                .padding(.vertical, 5)
-                        }
+                        EmptyFavoritesView()
                     } else {
                         MovieListView(movies: realmManager.favoriteMovies, showHiddenMovies: true).environmentObject(realmManager)
                     }
                 }
-                .navigationBarTitle("My Favorites", displayMode: .inline)
-            }
-            .alert(isPresented: $monitor.showSaveAlert) {
-                Alert(title: Text("No Wi-fi"), message: Text("Check your Internet Connection"), dismissButton: .cancel(Text("Ok")))
+                .navigationBarTitle(StringKey.my_favorites_title.rawValue, displayMode: .inline)
             }
         }.navigationViewStyle(StackNavigationViewStyle())
+    }
+    
+    fileprivate func EmptySearchView() -> some View {
+        return VStack(spacing: 15) {
+            Image(systemName: "magnifyingglass")
+                .resizable()
+                .frame(width: 100, height: 100, alignment: .center)
+            Text(StringKey.no_results_title.rawValue)
+                .foregroundColor(.black)
+                .font(.headline)
+                .fontWeight(.medium)
+                .padding(.top, 20)
+            Text(StringKey.no_search_results_subtitle.rawValue)
+                .foregroundColor(.black)
+                .font(.headline)
+                .fontWeight(.regular)
+                .padding(.vertical, 5)
+        }
+    }
+    
+    fileprivate func searchMoviesTask(_ value: String) -> (Task<(), Never>) {
+        return Task.init {
+            if !value.isEmpty && value.count > 3 {
+                moviesApi.searchMovies(query: value)
+            } else {
+                moviesApi.searchedMovies.removeAll()
+            }
+        }
     }
     
     fileprivate func SearchMoviesView() -> some View {
@@ -101,21 +127,7 @@ struct ContentView: View {
             ZStack {
                 VStack {
                     if searchText.isEmpty || moviesApi.searchedMovies.isEmpty {
-                        VStack(spacing: 15) {
-                            Image(systemName: "magnifyingglass")
-                                .resizable()
-                                .frame(width: 100, height: 100, alignment: .center)
-                            Text("No Results to show")
-                                .foregroundColor(.black)
-                                .font(.headline)
-                                .fontWeight(.medium)
-                                .padding(.top, 20)
-                            Text("Insert or change your text to search for movies")
-                                .foregroundColor(.black)
-                                .font(.headline)
-                                .fontWeight(.regular)
-                                .padding(.vertical, 5)
-                        }
+                        EmptySearchView()
                         
                     } else {
                         MovieListView(movies: moviesApi.searchedMovies, isSearchView: true, showHiddenMovies: false)
@@ -125,19 +137,11 @@ struct ContentView: View {
                 }
                 .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
                 .onChange(of: searchText) { value in
-                    Task.init {
-                        if !value.isEmpty && value.count > 3 {
-                            moviesApi.searchMovies(query: value)
-                        } else {
-                            moviesApi.searchedMovies.removeAll()
-                        }
-                    }
+                    searchMoviesTask(value)
                 }
-                .navigationBarTitle("Movies Database", displayMode: .inline)
+                .navigationBarTitle(StringKey.movies_database_title.rawValue, displayMode: .inline)
             }
-            .alert(isPresented: $monitor.showSaveAlert) {
-                Alert(title: Text("No Wi-fi"), message: Text("Check your Internet Connection"), dismissButton: .cancel(Text("Ok")))
-            }
+            
         }.navigationViewStyle(StackNavigationViewStyle())
     }
     
@@ -148,19 +152,25 @@ struct ContentView: View {
             MoviesView()
                 .tabItem {
                     Image(systemName: "square.grid.3x3")
-                    Text("Library")
+                    Text(StringKey.library_tab_item_title.rawValue)
                 }
             SearchMoviesView()
                 .tabItem {
                     Image(systemName: "magnifyingglass")
-                    Text("Search")
+                    Text(StringKey.search_tab_item_title.rawValue)
                 }
             FavoriteMoviesView()
                 .tabItem {
                     Image(systemName: "heart.fill")
-                    Text("Favorites")
+                    Text(StringKey.favorites_tab_item_title.rawValue)
                 }
         }.ignoresSafeArea(.all, edges: .bottom)
+            .alert(isPresented: $monitor.showNoConnectionAlert) {
+                Alert(title: Text(StringKey.no_wifi.rawValue), message: Text(StringKey.check_internet_connection.rawValue), dismissButton: .cancel(Text(StringKey.ok.rawValue)))
+            }
+            .alert(isPresented: $moviesApi.serviceError) {
+                Alert(title: Text(StringKey.error.rawValue), message: Text(StringKey.service_api_call_error_message.rawValue), dismissButton: .cancel(Text(StringKey.ok.rawValue)))
+            }
         
     }
 }

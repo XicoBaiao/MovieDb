@@ -22,20 +22,6 @@ extension MovieRealmObject {
     }
 }
 
-extension HiddenMovieRealmObject {
-    
-    func asHiddenMovie() throws -> Movie {
-
-        return Movie(id: id,
-                     title: title,
-                     backdropPath:backdropPath,
-                     posterPath:posterPath,
-                     overview:overview,
-                     voteAverage:voteAverage,
-                     voteCount:voteCount,
-                     runtime:runtime)
-    }
-}
 
 internal extension Sequence where Element == MovieRealmObject {
     
@@ -45,12 +31,5 @@ internal extension Sequence where Element == MovieRealmObject {
     
 }
 
-internal extension Sequence where Element == HiddenMovieRealmObject {
-    
-    func asHiddenMoviesArray() throws -> [Movie] {
-        return try self.map { try $0.asHiddenMovie() }
-    }
-    
-}
 
 

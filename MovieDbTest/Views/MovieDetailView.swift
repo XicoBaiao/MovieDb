@@ -9,54 +9,78 @@ import SwiftUI
 
 struct MovieDetailView: View {
     
+    @StateObject var moviesApi = MoviesApi()
+    
     let movie: Movie
     
-    var body: some View {
-        ZStack {
-            Color.white.ignoresSafeArea()
-                .opacity(0.5)
-            
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack(alignment: .center, spacing: 20) {
-                    AsyncImage(
-                        url: movie.backdropURL,
-                        content: { image in
-                            image.resizable()
-                                .aspectRatio(contentMode: .fit)
-                        },
-                        placeholder: {
-                            ProgressView()
-                        }
-                    )
-                    
-                    Text(movie.title.uppercased())
-                        .font(.largeTitle)
-                        .fontWeight(.heavy)
-                        .multilineTextAlignment(.center)
-                        .padding(.vertical, 8)
-                        .foregroundColor(.black)
-                        .background()
-                    
-                    Text(movie.overview)
-                        .font(.headline)
-                        .multilineTextAlignment(.leading)
-                        .foregroundColor(.gray)
-                        .padding(.horizontal)
-                    
-                    HStack(alignment: .center, spacing: 10.0) {
-                        Text("\(movie.voteAverage/2, specifier: "%.1f")")
-                        StarsView(rating: movie.voteAverage/2, maxRating: 5)
-                        Spacer()
-                        Text("\(movie.voteCount) votes")
-                    }.padding(.horizontal, 30)
-                        .frame(width: UIScreen.main.bounds.width*0.7, height: 60, alignment: .center)
-                    
-                }
-                
-                .navigationBarTitle(movie.title, displayMode: .inline)
+    fileprivate func MovieImage() -> some View {
+        return AsyncImage(
+            url: movie.backdropURL,
+            content: { image in
+                image.resizable()
+                    .aspectRatio(contentMode: .fit)
+            },
+            placeholder: {
+                ProgressView()
             }
+        )
+    }
+    
+    fileprivate func TitleAndDescription() -> some View {
+        return VStack {
+            Text(movie.title.uppercased())
+                .font(.largeTitle)
+                .fontWeight(.heavy)
+                .multilineTextAlignment(.center)
+                .padding(.vertical, 8)
+                .foregroundColor(.black)
+                .background()
+            Text(movie.overview)
+                .font(.headline)
+                .multilineTextAlignment(.leading)
+                .foregroundColor(.gray)
+                .padding(.horizontal)
         }
         
+    }
+    
+    fileprivate func Rating() -> some View {
+        return HStack(alignment: .center, spacing: 10.0) {
+            Text(Converters().convertMovieRating(rating: movie.voteAverage))
+            StarsView(rating: movie.voteAverage/2, maxRating: 5)
+            Spacer()
+            Text("\(movie.voteCount) votes")
+        }.padding(.horizontal, 30)
+            .frame(width: UIScreen.main.bounds.width*0.7, height: 60, alignment: .center)
+    }
+    
+    var body: some View {
+            ZStack {
+                Color.white.ignoresSafeArea()
+                    .opacity(0.5)
+                
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(alignment: .center, spacing: 20) {
+                        
+                        MovieImage()
+                        TitleAndDescription()
+                        Rating()
+                        if !moviesApi.recommendedMovies.isEmpty {
+                            Text("If you liked \(movie.title), we've got some recommendations for you")
+                                .font(.title2)
+                                .fontWeight(.medium)
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.5)
+                                .frame(alignment: .center)
+                            RecommendedMoviesCarousel(recommendedMovies: moviesApi.recommendedMovies)
+                        }
+                    }
+                    
+                    .navigationBarTitle(movie.title, displayMode: .inline)
+                }
+            }.onAppear {
+                moviesApi.getRecommendedMovies(id: movie.id)
+            }
     }
 }
 

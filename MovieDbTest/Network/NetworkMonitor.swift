@@ -13,22 +13,22 @@ final class NetworkMonitor: ObservableObject {
     let monitor = NWPathMonitor()
     let queue = DispatchQueue(label: "Monitor")
     
-    @Published var showSaveAlert = false
+    @Published var showNoConnectionAlert = false
     
     init() {
         monitor.pathUpdateHandler = { [weak self] path in
             DispatchQueue.main.async {
                 #if targetEnvironment(simulator)
                 if path.status == .unsatisfied {
-                    self?.showSaveAlert = false
+                    self?.showNoConnectionAlert = false
                 } else {
-                    self?.showSaveAlert = true
+                    self?.showNoConnectionAlert = true
                 }
                 #else
                 if path.status == .unsatisfied {
-                    self?.showSaveAlert = true
+                    self?.showNoConnectionAlert = true
                 } else {
-                    self?.showSaveAlert = false
+                    self?.showNoConnectionAlert = false
                 }
                 #endif
                 

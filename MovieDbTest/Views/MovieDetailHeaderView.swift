@@ -26,10 +26,3 @@ struct MovieDetailHeaderView: View {
     }
 }
 
-struct MovieDetailHeaderView_Previews: PreviewProvider {
-    static var previews: some View {
-        MovieDetailHeaderView(headingImage: "ºhpawfawfa", headingText: "awdawfawfa")
-            .previewLayout(.sizeThatFits)
-            .padding()
-    }
-}

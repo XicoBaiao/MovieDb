@@ -35,8 +35,3 @@ struct StarsView: View {
     }
 }
 
-//struct StarsRatingView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        StarsRatingView()
-//    }
-//}

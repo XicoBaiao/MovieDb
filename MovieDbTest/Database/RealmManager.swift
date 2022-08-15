@@ -109,20 +109,6 @@ class RealmManager: ObservableObject {
         }
     }
     
-    func getMovies() {
-        if let localRealm = localRealm {
-            let allMovies = localRealm.objects(MovieRealmObject.self)
-            favoriteMovies = []
-            do {
-                let movies = try allMovies.asMoviesArray()
-                favoriteMovies.append(contentsOf: movies)
-                return
-            } catch {
-                print("Error converting movies realm objects to movies")
-            }
-        }
-    }
-    
     func updateIsFavoriteMovie(id: Int, isFavorite: Bool) {
         if let localRealm = localRealm {
             do {
