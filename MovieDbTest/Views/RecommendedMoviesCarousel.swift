@@ -55,15 +55,6 @@ struct RecommendedMoviesCarousel: View {
                             let scale = getScale(proxy: proxy)
                             VStack(spacing: 8) {
                                 RecommendedMovieImage(recommendedMovie: recommendedMovie)
-//                                    .background(NavigationLink(
-//                                                    destination: MovieDetailView(movie: recommendedMovie),
-//                                                    isActive: $isActive) {
-//                                                    EmptyView()
-//                                                })
-//                                    .onTapGesture(perform: {
-//                                        isActive.toggle()
-//                                        print(recommendedMovie.title)
-//                                    })
                                 StarsView(rating: recommendedMovie.voteAverage/2, maxRating: 5)
                                     .frame(width: 150, height: 20, alignment: .center)
                                 Text(recommendedMovie.title)

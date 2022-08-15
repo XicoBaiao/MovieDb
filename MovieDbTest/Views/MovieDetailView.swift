@@ -49,7 +49,7 @@ struct MovieDetailView: View {
             Text(Converters().convertMovieRating(rating: movie.voteAverage))
             StarsView(rating: movie.voteAverage/2, maxRating: 5)
             Spacer()
-            Text("\(movie.voteCount) votes")
+            Text(String(format: StringKey.movie_detail_votes_text.rawValue, movie.voteCount))
         }.padding(.horizontal, 30)
             .frame(width: UIScreen.main.bounds.width*0.7, height: 60, alignment: .center)
     }
@@ -66,7 +66,7 @@ struct MovieDetailView: View {
                         TitleAndDescription()
                         Rating()
                         if !moviesApi.recommendedMovies.isEmpty {
-                            Text("If you liked \(movie.title), we've got some recommendations for you")
+                            Text(String(format: StringKey.movie_detail_recommendations_title.rawValue, movie.title))
                                 .font(.title2)
                                 .fontWeight(.medium)
                                 .lineLimit(2)

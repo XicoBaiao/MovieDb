@@ -24,4 +24,7 @@ public enum StringKey: String {
     case favorites_tab_item_title = "Favorites"
     case service_api_call_error_message = "There was an error with the request, try again later."
     case error = "Error"
+    case movie_detail_recommendations_title = "If you liked %@, we've got some recommendations for you"
+    case movie_detail_votes_text = "%@ votes"
+    case select = "Select"
 }

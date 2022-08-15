@@ -19,7 +19,7 @@ struct ContentView: View {
     
     
     fileprivate func movieSectionPicker() -> some View {
-        return Picker("Select", selection: $moviesSection) {
+        return Picker(StringKey.select.rawValue, selection: $moviesSection) {
             Text(MoviesEndpoints.nowPlaying.description).tag(MoviesEndpoints.nowPlaying)
             Text(MoviesEndpoints.popular.description).tag(MoviesEndpoints.popular)
             Text(MoviesEndpoints.topRated.description).tag(MoviesEndpoints.topRated)

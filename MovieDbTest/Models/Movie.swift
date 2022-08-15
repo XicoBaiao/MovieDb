@@ -10,7 +10,6 @@ import RealmSwift
 
 struct MovieResponse: Decodable {
     let results: [Movie]
-//    let dates: DateValue
     let page: Int
     let total_pages: Int
     let total_results: Int
@@ -25,7 +24,6 @@ struct MovieResponse: Decodable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-//        self.dates = try container.decode(DateValue.self, forKey: .dates)
         self.results = try container.decode([Movie].self, forKey: .results)
         self.total_pages = try container.decode(Int.self, forKey: .total_pages)
         self.total_results = try container.decode(Int.self, forKey: .total_results)
